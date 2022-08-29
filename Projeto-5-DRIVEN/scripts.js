@@ -44,7 +44,7 @@ function renderizarMensagens(mensagemm){
          ul.innerHTML += 
          `<li>
             <div class="mensagem cinza" >
-            ${mensagemm[indice].time} <strong>${mensagemm[indice].from}</strong> ${mensagemm[indice].text}
+            <b>(${mensagemm[indice].time})</b> <strong>${mensagemm[indice].from}</strong> ${mensagemm[indice].text}
             </div>
          </li>`;
        } 
@@ -52,7 +52,7 @@ function renderizarMensagens(mensagemm){
             ul.innerHTML += 
          `<li>
             <div class="mensagem branco" >
-            ${mensagemm[indice].time} <strong>${mensagemm[indice].from}</strong> para <strong>${mensagemm[indice].to}</strong>: ${mensagemm[indice].text}
+            <b>(${mensagemm[indice].time})</b> <strong>${mensagemm[indice].from}</strong> para <strong>${mensagemm[indice].to}</strong>: ${mensagemm[indice].text}
             </div>
          </li>`;
          
@@ -61,7 +61,7 @@ function renderizarMensagens(mensagemm){
         ul.innerHTML += 
      `<li>
         <div class="mensagem rosa" >
-        ${mensagemm[indice].time} <strong>${mensagemm[indice].from}</strong> para <strong>${mensagemm[indice].to}</strong>: ${mensagemm[indice].text}
+        <b>(${mensagemm[indice].time})</b> <strong>${mensagemm[indice].from}</strong> para <strong>${mensagemm[indice].to}</strong>: ${mensagemm[indice].text}
         </div>
      </li>`;
    }
@@ -87,12 +87,7 @@ function renderizarMensagens(mensagemm){
 
 
 
-    function attStatus(){
-        console.log(dados[0]);
-        const status = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', dados[0]);
-        setInterval(attStatus, 5000);
-    
-    }
+   
 
 
 
@@ -142,7 +137,7 @@ function mensagemNaoEnviada(){
     console.log('nao consegui enviar a mensagem')
 }
 
-setInterval(resetando,30000);
+setInterval(resetando,3000);
 
 function resetando(){
     
@@ -153,154 +148,29 @@ function resetando(){
     
 }
 
+attStatus();
+function attStatus(){
+    let dados = [ 
+        {
+        name: nomeDaPessoa
+    }        
+    ]
+    const status = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', dados[0]);
+    setInterval(attStatus, 5000);
 
+    status.catch(saiuDaSala);
 
+}
 
-
-
-
-
-
-
-
-
-
-
-/*
-
-
-let receitas = []; 
-
-function pergarDados(){ 
-
-    const promessa = axios.get('https://mock-api.driven.com.br/api/v2/tastecamp/receitas');
-    promessa.then( dadosChegaram ); 
+function saiuDaSala(){
     
 }
-pergarDados();
-   
-function dadosChegaram(resposta){ 
-
-    console.log(resposta);
-    console.log(resposta.data);
-    receitas = resposta.data;
-
-    renderizarReceitas();
-}
-
-
-/* [
-    {titulo:'Bolo de Chocolate', ingredientes:'ingredientes do bolo de chocolate', preparo:'preparo do bolo'},
-    {titulo:'Pudim de leite condensado', ingredientes:'ingredientes do pudim', preparo:'preparo do púdim'},
-    {titulo:'Brigadieiro', ingredientes:'ingredientes do brigadeiro', preparo:'preparo do brigadeiro'},    
-];
- */
-
-/*function renderizarReceitas(){
-    // popular a lista de receitas no sidebar
-    const ul = document.querySelector('.receitas');
-
-    ul.innerHTML = '';
-
-    for(let i = 0; i < receitas.length; i++){
-
-        ul.innerHTML = ul.innerHTML + `
-            <li>
-                <ion-icon name="fast-food-outline"></ion-icon>
-                ${receitas[i].titulo}
-            </li>
-        `;
-    }
-}
-
-renderizarReceitas();
-
-function adicionarReceita(){
-
-    // pegar os dados preenchidos nos inputs
-    const elementoTitulo = document.querySelector('.nome-receita');
-    const elementIngredientes = document.querySelector('.ingredientes-receita');
-    const elementoModoPreparo = document.querySelector('.modo-preparo-receita');
-
-    // criar uma nova receita
-    const novaReceita = {
-        titulo: elementoTitulo.value,
-        ingredientes: elementIngredientes.value,
-        preparo: elementoModoPreparo.value
-    }; 
-
-    // enviar a receita (cartinha) para ser salva no servidor
-    const promessa = axios.post('https://mock-api.driven.com.br/api/v2/tastecamp/receitas', novaReceita); 
-    promessa.then( pergarDados ); // se der certo
-    promessa.catch( deuErro ); // se der erro
-
-    // adicionar essa receita na minha lista
-    //receitas.push(novaReceita);
-
-    // exibir ( renderizar ) a nova receita na tela ( html )
-    renderizarReceitas();
-}
-
-function deuErro(erro){
-    console.log(erro);
-    alert('Algo deu errado, a receita não foi salva!');
-}
-*/
-
-
-
-
-/*const dados = {
-    name: "Pedrol"
-};
-const requisicao = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants ', dados);
-
-requisicao.then(tratarSucesso);
-requisicao.catch(tratarError);
-
-function tratarSucesso(abc){
-    alert('oi');
-}
-function tratarError(abc){
-    alert('erro');
-}
-
-
-const requisicao2 = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', dados);
-
-requisicao2.then(tratarSucesso2);
-requisicao2.catch(tratarError2);
-
-function tratarSucesso2(abc){
-    alert('oi');
-}
-function tratarError2(abc){
-    alert('erro');
-}
 
 
 
 
 
-const buscarMensagens = [
-	{
-		from: "Joao",
-		to: "Todos",
-		text: "entra na sala...",
-		type: "status",
-		time: "08:01:17"
-	},
-	{
-		from: "Joao",
-		to: "Todos",
-		text: "Bom dia",
-		type: "message",
-		time: "08:02:50"
-	},
-]
-const promessa = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
-promessa.then(processarResposta);
 
-function processarResposta(resposta) {
-	console.log(resposta.data);
-}*/
+
+
+
